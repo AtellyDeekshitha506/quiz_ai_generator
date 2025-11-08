@@ -1,0 +1,371 @@
+ Widget _buildFile(UploadedFile file, int index) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: file.type.color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              file.type.icon,
+              color: file.type.color,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  file.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '${file.type.label} • ${file.size}',
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close, size: 20),
+            onPressed: () => _removeFile(index),
+            color: Colors.red,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+          ),
+        ],
+      ),
+    );
+  }
+  void _showTipsBottom(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      Icons.lightbulb,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 28,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    'How to Get Best Results',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildDetailedTip(
+                      context,
+                      icon: Icons.description,
+                      title: 'Provide Clear and Detailed Notes',
+                      description:
+                          'The more detailed your content, the better AI can understand context and generate accurate questions. Include definitions, examples, and explanations.',
+                      examples: [
+                        'Include key definitions and terminology',
+                        'Add relevant examples and use cases',
+                        'Explain concepts with context',
+                      ],
+                      color: Colors.blue,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildDetailedTip(
+                      context,
+                      icon: Icons.emoji_objects,
+                      title: 'Specify Key Concepts to Focus On',
+                      description:
+                          'Highlight the most important topics or concepts you want to master. This helps AI prioritize question generation around these areas.',
+                      examples: [
+                        'Use bold or headers for important topics',
+                        'Create a bullet list of key concepts',
+                        'Add notes about what to emphasize',
+                      ],
+                      color: Colors.orange,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildDetailedTip(
+                      context,
+                      icon: Icons.shuffle,
+                      title: 'Mix Different Question Types',
+                      description:
+                          'Using various question formats helps reinforce learning from different angles and keeps practice engaging.',
+                      examples: [
+                        'MCQs test recognition and recall',
+                        'True/False verify understanding',
+                        'Short answers test deeper comprehension',
+                      ],
+                      color: Colors.purple,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildDetailedTip(
+                      context,
+                      icon: Icons.trending_up,
+                      title: 'Start Easy, Progress Gradually',
+                      description:
+                          'Build confidence by starting with easier questions, then increase difficulty as you master the material.',
+                      examples: [
+                        'Begin with Easy difficulty level',
+                        'Review explanations after each quiz',
+                        'Move to Medium/Hard when ready',
+                      ],
+                      color: Colors.green,
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.primaryContainer,
+                            Theme.of(context).colorScheme.secondaryContainer,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.workspace_premium,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Pro Tips for Files',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          _buildProTipItem(
+                              'Upload multiple files for comprehensive coverage'),
+                          _buildProTipItem(
+                              'Combine different file types (PDF, DOC, TXT)'),
+                          _buildProTipItem(
+                              'Ensure text is readable (not scanned images)'),
+                          _buildProTipItem(
+                              'Add topic context for better results'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+   Widget _buildDetailedTip(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String description,
+    required List<String> examples,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: color, size: 24),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade700,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...examples.map((example) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 6),
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: color,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        example,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+   Widget _buildProTipItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.check_circle,
+            size: 16,
+            color: Colors.green,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+xtension FileTypeExtension on FileType {
+  IconData get icon {
+    switch (this) {
+      case FileType.pdf:
+        return Icons.picture_as_pdf;
+      case FileType.doc:
+        return Icons.description;
+      case FileType.txt:
+        return Icons.text_snippet;
+      case FileType.ppt:
+        return Icons.slideshow;
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case FileType.pdf:
+        return Colors.red;
+      case FileType.doc:
+        return Colors.blue;
+      case FileType.txt:
+        return Colors.grey;
+      case FileType.ppt:
+        return Colors.orange;
+    }
+  }
+
+  String get label {
+    switch (this) {
+      case FileType.pdf:
+        return 'PDF';
+      case FileType.doc:
+        return 'Document';
+      case FileType.txt:
+        return 'Text';
+      case FileType.ppt:
+        return 'Presentation';
+    }
+  }
+}
+
