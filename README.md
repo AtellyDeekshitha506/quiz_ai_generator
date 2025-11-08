@@ -1,6 +1,10 @@
-# quiz_ai
 
-A new Flutter project.
+# Quiz AI Generator
+A Flutter-based quiz app that uses AI-generated questions.  
+Features:
+- Backend integration
+- Provider state management
+- Clean UI design
 
 ## Getting Started
 
